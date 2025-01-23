@@ -1,0 +1,79 @@
+x-scan-service: &scan-service
+  networks:
+    - custom
+  volumes:
+    - ${SCAN_PATH:-./}:/scan
+    - ./reports:/reports
+  working_dir: /scan
+  env_file:
+    - .env
+
+services:
+  semgrep:
+    <<: *scan-service
+    container_name: semgrep
+    image: semgrep/semgrep:latest
+    environment:
+      SEMGREP_APP_TOKEN: ${SEMGREP_TOKEN}
+    volumes:
+      - semgrep_rules:/rules
+      - ./rules.txt:/rules/rules.txt
+      - ${SCAN_PATH:-./}:/scan
+      - ./scripts:/scripts
+      - ./reports:/reports
+    entrypoint: ["/bin/sh"]
+    command: ["/scripts/run-semgrep.sh"]
+
+  gitleaks:
+    <<: *scan-service
+    container_name: gitleaks
+    image: zricethezav/gitleaks:latest
+    volumes:
+      - ./scripts:/scripts
+      - ./reports:/reports
+    entrypoint: ["/bin/sh"]
+    command: ["/scripts/run-gitleaks.sh"]
+
+  trivy:
+    <<: *scan-service
+    container_name: trivy
+    image: aquasec/trivy:latest
+    volumes:
+      - trivy-cache:/root/.cache
+      - ${SCAN_PATH:-./}:/scan
+      - ./scripts:/scripts
+      - ./reports:/reports
+    environment:
+      HOME: /root
+      TRIVY_CACHE_DIR: /root/.cache
+      TRIVY_NO_PROGRESS: "true"
+    entrypoint: ["/bin/sh"]
+    command: ["/scripts/run-trivy.sh"]
+
+  checkov:
+    <<: *scan-service
+    container_name: checkov
+    image: bridgecrew/checkov:latest
+    volumes:
+      - ./scripts:/scripts
+      - ./reports:/reports
+    entrypoint: ["/bin/sh"]
+    command: ["/scripts/run-checkov.sh"]
+
+  kubescape:
+    <<: *scan-service
+    container_name: kubescape
+    image: bitnami/kubescape:latest
+    volumes:
+      - ./scripts:/scripts
+      - ./reports:/reports
+    entrypoint: ["/bin/sh"]
+    command: ["/scripts/run-kubescape.sh"]
+
+networks:
+  custom:
+    driver: bridge
+
+volumes:
+  semgrep_rules:
+  trivy-cache:
