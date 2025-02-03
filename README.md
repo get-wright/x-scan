@@ -36,11 +36,9 @@ This option should run trivy and show the log of it in the CLI
 
 The project includes two Semgrep rule repositories as Git submodules: 
 
-semgrep-rules-modified
+- semgrep-rules-modified
 
-semgrep-rules-trail-of-bits
-
-
+- semgrep-rules-trail-of-bits
 
 Initialize the rule submodules:
 ```bash
@@ -51,21 +49,4 @@ git submodule update --init
 
 Each scanner is configurable through environment variables and volume mounts in docker-compose.yml. The scan scripts in scripts folder.
 
-## 🏗️ Project Structure
-
-```
-.
-├── .env                   # Environment configuration
-├── docker-compose.yml     # Container orchestration
-├── reports/               # Scan results
-├── rules/                 # Custom scanner rules
-│   ├── semgrep-rules-modified/
-│   └── semgrep-rules-trail-of-bits/
-└── scripts/               # Scanner execution scripts
-    ├── run-checkov.sh
-    ├── run-gitleaks.sh
-    ├── run-kubescape.sh
-    ├── run-semgrep.sh
-    └── run-trivy.sh
-```
 
