@@ -10,20 +10,19 @@ x-scan-service: &scan-service
 
 services:
   semgrep:
-    <<: *scan-service
-    container_name: semgrep
-    image: semgrep/semgrep:latest
-    environment:
-      SEMGREP_APP_TOKEN: ${SEMGREP_TOKEN}
-    volumes:
-      - semgrep_rules:/rules
-      - ./rules.txt:/rules/rules.txt
-      - ${SCAN_PATH:-./}:/scan
-      - ./scripts:/scripts
-      - ./reports:/reports
-    entrypoint: ["/bin/sh"]
-    command: ["/scripts/run-semgrep.sh"]
-
+      <<: *scan-service
+      container_name: semgrep
+      image: semgrep/semgrep:latest
+      environment:
+        SEMGREP_APP_TOKEN: ${SEMGREP_TOKEN}
+      volumes:
+        - ${RULES_PATH:-./rules}:/rules:ro
+        - ${SCAN_PATH:-./}:/scan
+        - ./scripts:/scripts
+        - ./reports:/reports
+      entrypoint: ["/bin/sh"]
+      command: ["/scripts/run-semgrep.sh"]
+    
   gitleaks:
     <<: *scan-service
     container_name: gitleaks

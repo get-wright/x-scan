@@ -1,2 +1,0 @@
-https://github.com/dgryski/semgrep-go.git,semgrep-go
-https://github.com/vmnguyen/semgrep-rules.git,semgrep-rules
