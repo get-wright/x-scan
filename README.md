@@ -26,10 +26,11 @@ TRIVY_SCANNERS=vuln,misconfig,secret
 
 1. Make sure you have Docker and Docker Compose installed
 
-2. Start all scanners:
+2. To run X-Scan, interact with main.py :
 ```bash
-docker-compose up
+.\main.py --help
 ```
+This option should run trivy and show the log of it in the CLI
 
 ## 📝 Custom Rules
 
