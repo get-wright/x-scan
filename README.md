@@ -12,11 +12,7 @@ This project provides a containerized security scanning pipeline that runs multi
 
 ## ⚙️ Configuration
 
-Configure the scanning environment in the 
-
-.env
-
- file:
+Configure the scanning environment in the .env
 
 ```env
 SEMGREP_TOKEN=<your-semgrep-token>
@@ -37,17 +33,13 @@ docker-compose up
 
 ## 📝 Custom Rules
 
-The project includes two Semgrep rule repositories as Git submodules:
-- 
+The project includes two Semgrep rule repositories as Git submodules: 
 
 semgrep-rules-modified
 
-: Custom modified ruleset
-- 
-
 semgrep-rules-trail-of-bits
 
-: Trail of Bits security rules
+
 
 Initialize the rule submodules:
 ```bash
@@ -75,3 +67,4 @@ Each scanner is configurable through environment variables and volume mounts in 
     ├── run-semgrep.sh
     └── run-trivy.sh
 ```
+
