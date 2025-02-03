@@ -1,0 +1,7 @@
+[submodule "rules/semgrep-rules-modified"]
+	path = rules/semgrep-rules-modified
+	url = https://github.com/get-wright/semgrep-rules.git
+	branch = dev
+[submodule "rules/semgrep-rules-trail-of-bits"]
+	path = rules/semgrep-rules-trail-of-bits
+	url = https://github.com/trailofbits/semgrep-rules.git
